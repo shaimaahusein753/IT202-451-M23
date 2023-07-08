@@ -2,6 +2,7 @@
 
 // Get a reference to the canvas DOM element
 var colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF"];
+// Initialize the score if already saved on localstorage
 var heigestRecord = JSON.parse(localStorage.getItem('heigestRecord')) || 0;
 var canvas = document.getElementById('canvas');
 // Get the canvas drawing context
@@ -112,13 +113,15 @@ function endGame() {
     context.font = '24px Arial';
     context.textAlign = 'center';
     context.fillText('Final Score: ' + score, canvas.width / 2, canvas.height / 2);
-    if(score>heigestRecord){
+    // check for new high record
+    if (score > heigestRecord) {
         context.fillStyle = '#00FF00';
         context.font = '30px Arial'
         context.textAlign = 'center';
-        context.fillText('New High Record '+ score,canvas.width / 2, (canvas.height / 4) * 3);
-        localStorage.setItem('heigestRecord',JSON.stringify(score));
-        heigestRecord=score;
+        context.fillText('New High Record ' + score, canvas.width / 2, (canvas.height / 4) * 3);
+        // saving new high record on localstorage for next time.
+        localStorage.setItem('heigestRecord', JSON.stringify(score));
+        heigestRecord = score;
     }
 }
 
@@ -176,6 +179,7 @@ function draw() {
     context.fillStyle = '#FF0000';
     context.fillRect(x, y, sideLength, sideLength);
     // Draw the target 
+    // change the color if less then or equal to 5 seconds reaming
     if (countdown >= 5) {
         context.fillStyle = '#00FF00';
     } else {
